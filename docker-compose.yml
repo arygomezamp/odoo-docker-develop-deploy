@@ -2,7 +2,7 @@ version: '3'
 
 services:
   odoo:
-    image: odoo:latest
+    image: odoo:17
     container_name: odoo
     depends_on:
       - db
@@ -23,12 +23,12 @@ services:
       - odoo_network
 
   db:
-    image: postgres:latest
+    image: postgres:15
     container_name: db
     environment:
-      - POSTGRES_DB=odoo
-      - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - POSTGRES_DB=postgres
     volumes:
       - /opt/odoo/postgresql-data:/var/lib/postgresql/data
     networks:

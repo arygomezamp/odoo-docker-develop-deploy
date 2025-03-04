@@ -37,24 +37,24 @@ while read -r repo_url; do
         git clone "$repo_url" "$target_dir"
     fi
 done < "$OCA_FILE"
-
-# Descargar los repositorios personalizados
-echo "Descargando repositorios personalizados..."
-while read -r repo_url; do
-    repo_name=$(basename "$repo_url" .git)
-    target_dir="$CUSTOM_DIR/$repo_name"
-    if [ -d "$target_dir" ]; then
-        echo "Actualizando $repo_name..."
-        git -C "$target_dir" pull
-    else
-        echo "Clonando $repo_name..."
-        git clone "$repo_url" "$target_dir"
-    fi
-done < "$CUSTOM_FILE"
+#
+## Descargar los repositorios personalizados
+#echo "Descargando repositorios personalizados..."
+#while read -r repo_url; do
+#    repo_name=$(basename "$repo_url" .git)
+#    target_dir="$CUSTOM_DIR/$repo_name"
+#    if [ -d "$target_dir" ]; then
+#        echo "Actualizando $repo_name..."
+#        git -C "$target_dir" pull
+#    else
+#        echo "Clonando $repo_name..."
+#        git clone "$repo_url" "$target_dir"
+#    fi
+#done < "$CUSTOM_FILE"
 
 # Generar archivo odoo.conf
 echo "Generando archivo odoo.conf..."
-ADDONS_PATH=$(find "$OCA_DIR" "$CUSTOM_DIR" -mindepth 1 -maxdepth 1 -type d | paste -sd "," -)
+ADDONS_PATH=$(find "$OCA_DIR" -mindepth 1 -maxdepth 1 -type d | paste -sd "," -)
 
 cat > "$ODOO_CONF" <<EOF
 [options]

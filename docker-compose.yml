@@ -1,40 +1,39 @@
-version: '3.8'
+version: '3'
 
 services:
   odoo:
     image: odoo:latest
     container_name: odoo
-    ports:
-      - "8069:8069"
-    environment:
-      - ADDONS_PATH=/mnt/oca-addons,/mnt/custom-addons
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=odoo
-      - DB_PASSWORD=odoo
-      - ADMIN_PASSWORD=admin
-      - LOG_LEVEL=debug
+    depends_on:
+      - db
     volumes:
       - /opt/odoo/oca_modules:/mnt/oca-addons:rw
       - /opt/odoo/custom_modules:/mnt/custom-addons:rw
-      - /opt/odoo/config/odoo.conf:/etc/odoo/odoo.conf:ro
-    depends_on:
-      - db
+      - /opt/odoo/odoo-docker-develop-deploy/config/odoo.conf:/etc/odoo/odoo.conf:ro  # Esto monta el archivo de configuración desde el repositorio
+    ports:
+      - "8069:8069"
+    environment:
+      - HOST=odoo
+      - USER=odoo
+      - PASSWORD=odoo
+      - DB_NAME=odoo
+      - ADMIN_PASSWORD=admin
+      - LOG_LEVEL=debug
     networks:
-      - odoo-net
+      - odoo_network
 
   db:
     image: postgres:latest
-    container_name: odoo-db
+    container_name: db
     environment:
+      - POSTGRES_DB=odoo
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
-      - POSTGRES_DB=odoo
     volumes:
       - /opt/odoo/postgresql-data:/var/lib/postgresql/data
     networks:
-      - odoo-net
+      - odoo_network
 
 networks:
-  odoo-net:
+  odoo_network:
     driver: bridge

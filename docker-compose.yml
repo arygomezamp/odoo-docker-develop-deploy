@@ -1,27 +1,24 @@
-version: "3"
-
+version: '3'
 services:
   db:
     image: postgres:15
-    environment:
-      - POSTGRES_PASSWORD=cdhDU8cSvbS2
-      - POSTGRES_USER=odoo
-      - POSTGRES_DB=postgres
-      - PGPASS=cdhDU8cSvbS2
-      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - ./postgresql-data:/var/lib/postgresql/data
-    restart: always
+      - /opt/odoo/postgresql-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    networks:
+        - default
 
   odoo:
     image: odoo:17
-    depends_on:
-      - db
+    volumes:
+      - /opt/odoo/oca_modules:/mnt/extra-addons  #  OCA
+      - /opt/odoo/custom_modules:/mnt/extra-addons  # módulos personalizados
+      - /opt/odoo/config/odoo.conf:/etc/odoo/odoo.conf  # Archivo de configuración
     ports:
       - "8069:8069"
-    volumes:
-      - ./addons:/mnt/extra-addons
-      - ./config/odoo.conf:/etc/odoo/odoo.conf
+    depends_on:
+      - db
     networks:
       - default
-    restart: always

@@ -43,26 +43,6 @@ else
     echo "No se encontraron repositorios OCA en $OCA_FILE. Saltando descarga."
 fi
 
-# Verificar si el archivo custom.txt tiene contenido
-if [ -s "$CUSTOM_FILE" ]; then
-    # Descargar los repositorios personalizados
-    echo "Descargando repositorios personalizados..."
-    while read -r repo_url; do
-        repo_name=$(basename "$repo_url" .git)
-        target_dir="$CUSTOM_DIR/$repo_name"
-
-        if [ -d "$target_dir" ]; then
-            echo "Actualizando $repo_name..."
-            git -C "$target_dir" pull  # Actualiza el repositorio existente
-        else
-            echo "Clonando $repo_name..."
-            git clone "$repo_url" "$target_dir"  # Clona el repositorio si no existe
-        fi
-    done < "$CUSTOM_FILE"
-else
-    echo "No se encontraron repositorios personalizados en $CUSTOM_FILE. Saltando descarga."
-fi
-
 # Levantar los contenedores
 echo "Levantando entorno Odoo..."
 docker-compose -f "$PROJECT_DIR/docker-compose.yml" up -d

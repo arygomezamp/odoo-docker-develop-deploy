@@ -5,8 +5,8 @@ set -e
 PROJECT_DIR="/opt/odoo/odoo-docker-develop-deploy"
 OCA_FILE="$PROJECT_DIR/OCA.txt"
 CUSTOM_FILE="$PROJECT_DIR/custom.txt"
-OCA_DIR="/mnt/oca_modules"
-CUSTOM_DIR="/mnt/custom_modules"
+OCA_DIR="/opt/oca_modules"
+CUSTOM_DIR="/opt/custom_modules"
 ODOO_CONF="$PROJECT_DIR/config/odoo.conf"
 
 # Verificar si Docker está instalado, si no lo está, instalarlo

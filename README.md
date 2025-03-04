@@ -5,7 +5,7 @@ Despliegue automático de Odoo para desarrollo con Docker y módulos externos de
 ## 🚀 Instalación rápida
 
 ```bash
-git clone https://github.com/TU_USUARIO/odoo-docker-dev.git /opt/odoo-docker-dev
+git clone git@github.com:arygomezamp/odoo-docker-develop-deploy.git /opt/odoo-docker-develop-deploy
 cd /opt/odoo-docker-develop-deploy
 chmod +x setup.sh
 ./setup.sh

@@ -1,24 +1,40 @@
-version: '3'
-services:
-  db:
-    image: postgres:15
-    volumes:
-      - /opt/odoo/postgresql-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=odoo
-      - POSTGRES_PASSWORD=odoo
-    networks:
-        - default
+version: '3.8'
 
+services:
   odoo:
-    image: odoo:17
-    volumes:
-      - /opt/odoo/oca_modules:/mnt/extra-addons  #  OCA
-      - /opt/odoo/custom_modules:/mnt/extra-addons  # módulos personalizados
-      - /opt/odoo/config/odoo.conf:/etc/odoo/odoo.conf  # Archivo de configuración
+    image: odoo:latest
+    container_name: odoo
     ports:
       - "8069:8069"
+    environment:
+      - ADDONS_PATH=/mnt/oca-addons,/mnt/custom-addons
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=odoo
+      - DB_PASSWORD=odoo
+      - ADMIN_PASSWORD=admin
+      - LOG_LEVEL=debug
+    volumes:
+      - /opt/odoo/oca_modules:/mnt/oca-addons:rw
+      - /opt/odoo/custom_modules:/mnt/custom-addons:rw
+      - /opt/odoo/config/odoo.conf:/etc/odoo/odoo.conf:ro
     depends_on:
       - db
     networks:
-      - default
+      - odoo-net
+
+  db:
+    image: postgres:latest
+    container_name: odoo-db
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=odoo
+    volumes:
+      - /opt/odoo/postgresql-data:/var/lib/postgresql/data
+    networks:
+      - odoo-net
+
+networks:
+  odoo-net:
+    driver: bridge

@@ -8,8 +8,8 @@ services:
       - db
     volumes:
       - /opt/odoo/config:/etc/odoo  # Monta la carpeta config del host a /etc/odoo en el contenedor
-      - /opt/odoo/custom_modules:/mnt/extra-addons
-      - /opt/odoo/oca_modules:/mnt/extra-addons # Esto monta el archivo de configuración desde el repositorio
+      - /opt/odoo/custom_modules:/mnt/custom_modules
+      - /opt/odoo/oca_modules:/mnt/oca_modules # Esto monta el archivo de configuración desde el repositorio
     ports:
       - "8069:8069"
     environment:

@@ -2,11 +2,12 @@
 
 set -e
 
+# Definir las rutas del proyecto y las rutas fuera del proyecto para los módulos
 PROJECT_DIR="/opt/odoo/odoo-docker-develop-deploy"
 OCA_FILE="$PROJECT_DIR/OCA.txt"
 CUSTOM_FILE="$PROJECT_DIR/custom.txt"
-OCA_DIR="/opt/odoo/oca_modules"  # Separar directorios para OCA y Custom
-ADDONS_DIR="/opt/odoo/custom_modules"
+OCA_DIR="/opt/odoo/oca_modules"  # Fuera de la estructura del proyecto
+ADDONS_DIR="/opt/odoo/custom_modules"  # Fuera de la estructura del proyecto
 ODOO_CONF="$PROJECT_DIR/config/odoo.conf"
 
 # Verificar si Docker está instalado
@@ -21,10 +22,10 @@ if ! command -v docker-compose &> /dev/null; then
     sudo apt-get install -y docker-compose
 fi
 
-# Crear directorios necesarios
+# Crear directorios necesarios fuera del proyecto
 mkdir -p "$ADDONS_DIR" "$OCA_DIR" "$PROJECT_DIR/config" "$PROJECT_DIR/postgresql-data"
 
-# Descargar y actualizar repositorios OCA
+# Descargar y actualizar repositorios OCA fuera del proyecto
 echo "Descargando repositorios OCA..."
 while read -r repo_url; do
     repo_name=$(basename "$repo_url" .git)
@@ -38,7 +39,7 @@ while read -r repo_url; do
     fi
 done < "$OCA_FILE"
 
-# Descargar y actualizar repositorios Custom
+# Descargar y actualizar repositorios Custom fuera del proyecto
 echo "Descargando repositorios Custom..."
 while read -r repo_url; do
     repo_name=$(basename "$repo_url" .git)
@@ -52,7 +53,7 @@ while read -r repo_url; do
     fi
 done < "$CUSTOM_FILE"
 
-# Generar odoo.conf con las rutas de los addons
+# Generar odoo.conf con las rutas de los addons (fuera de la estructura del proyecto)
 echo "Generando odoo.conf..."
 ADDONS_PATH=$(find "$ADDONS_DIR" -mindepth 1 -maxdepth 1 -type d | paste -sd "," -)
 OCA_PATH=$(find "$OCA_DIR" -mindepth 1 -maxdepth 1 -type d | paste -sd "," -)

@@ -63,7 +63,7 @@ ADDONS_ALL_PATH="$OCA_PATH,$ADDONS_PATH"  # Combina las rutas de OCA y Custom
 cat > "$ODOO_CONF" <<EOF
 [options]
 addons_path = $ADDONS_ALL_PATH
-db_host = db
+db_host = localhost
 db_port = 5432
 db_user = odoo
 db_password = odoo

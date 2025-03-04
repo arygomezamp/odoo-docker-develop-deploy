@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECT_DIR="/opt/odoo-docker-dev"
+PROJECT_DIR="/opt/odoo/odoo-docker-develop-deploy"
 REQUIREMENTS_FILE="$PROJECT_DIR/requirements.txt"
 ADDONS_DIR="$PROJECT_DIR/addons"
 ODOO_CONF="$PROJECT_DIR/config/odoo.conf"

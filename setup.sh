@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECT_DIR="/opt/odoo/odoo-docker-deploy"
+PROJECT_DIR="/opt/odoo/odoo-docker-develop-deploy"
 OCA_FILE="$PROJECT_DIR/OCA.txt"
 CUSTOM_FILE="$PROJECT_DIR/custom.txt"
 ADDONS_DIR="/opt/odoo"

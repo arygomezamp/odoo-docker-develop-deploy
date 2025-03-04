@@ -10,9 +10,7 @@ services:
       - PGPASS=cdhDU8cSvbS2
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - 'postgres-data:/var/lib/postgresql/data/pgdata'
-    networks:
-      - default
+      - ./postgresql-data:/var/lib/postgresql/data
     restart: always
 
   odoo:
